@@ -1,3 +1,5 @@
+**[中文](README.zh-CN.md)** | English
+
 # Typst Resume Marketplace
 
 A Claude Code plugin that generates polished PDF resumes from free-form Markdown. Pick from 5 templates in a browser-based selector with real-time SVG previews of your actual resume data.

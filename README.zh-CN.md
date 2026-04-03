@@ -1,3 +1,5 @@
+中文 | **[English](README.md)**
+
 # Typst 简历 Marketplace
 
 一个 Claude Code 插件，从自由格式的 Markdown 简历生成精美 PDF。在浏览器中用你的真实简历数据预览 5 套模板，点击选择后一键编译。
