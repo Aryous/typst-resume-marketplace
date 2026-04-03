@@ -1,2 +1,14 @@
+# Brainstorming companion sessions
 .superpowers/
+
+# Skill runtime outputs
 tpr-output/
+
+# Eval workspace
+typst-resume-workspace/
+
+# macOS
+.DS_Store
+
+# Claude Code local state
+.claude/
