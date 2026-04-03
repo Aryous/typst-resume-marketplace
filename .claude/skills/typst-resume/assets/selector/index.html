@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TPR — Template Selector</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8f9fa;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      letter-spacing: 0.02em;
+    }
+
+    .header p {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-top: 0.5rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #fff;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .card:hover {
+      border-color: #93c5fd;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .card.selected {
+      border-color: #2563eb;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+    }
+
+    .card.selected::after {
+      content: "✓";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 28px;
+      height: 28px;
+      background: #2563eb;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      z-index: 10;
+    }
+
+    .card-preview {
+      width: 100%;
+      aspect-ratio: 210 / 297;
+      overflow: hidden;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .card-preview img,
+    .card-preview svg,
+    .card-preview object {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .card-info {
+      padding: 1rem;
+    }
+
+    .card-info h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-info p {
+      font-size: 0.8125rem;
+      color: #6b7280;
+    }
+
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #1a1a2e;
+      color: #f1f5f9;
+      padding: 0.75rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .status-bar.visible {
+      transform: translateY(0);
+    }
+
+    .status-bar .template-name {
+      font-weight: 600;
+      color: #93c5fd;
+    }
+
+    .status-bar .confirm-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .status-bar .confirm-btn:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>选择简历模板</h1>
+    <p>点击预览卡片选择模板，确认后将编译为 PDF</p>
+  </div>
+
+  <div class="grid">
+    <!-- TPR_CARDS_PLACEHOLDER: Agent replaces this with generated cards -->
+  </div>
+
+  <div class="status-bar" id="statusBar">
+    <span>已选择: <span class="template-name" id="selectedName">—</span></span>
+    <button class="confirm-btn" onclick="confirmSelection()">确认选择</button>
+  </div>
+
+  <script>
+    let selectedTemplate = null;
+
+    function selectTemplate(id, name) {
+      selectedTemplate = id;
+
+      // Update card states
+      document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+      document.querySelector(`[data-template="${id}"]`).classList.add('selected');
+
+      // Show status bar
+      document.getElementById('selectedName').textContent = name;
+      document.getElementById('statusBar').classList.add('visible');
+    }
+
+    async function confirmSelection() {
+      if (!selectedTemplate) return;
+
+      try {
+        const res = await fetch('/api/select', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ template: selectedTemplate })
+        });
+
+        if (res.ok) {
+          document.querySelector('.confirm-btn').textContent = '已确认 ✓';
+          document.querySelector('.confirm-btn').disabled = true;
+          document.querySelector('.confirm-btn').style.background = '#059669';
+        }
+      } catch (err) {
+        console.error('Failed to send selection:', err);
+      }
+    }
+  </script>
+</body>
+</html>

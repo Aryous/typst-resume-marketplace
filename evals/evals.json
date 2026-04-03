@@ -1,0 +1,23 @@
+{
+  "skill_name": "typst-resume",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我用这个 markdown 简历生成 PDF：test-resumes/sample-zh.md",
+      "expected_output": "Successfully parses Chinese resume, generates 5 SVG previews, starts template selector server, and compiles final PDF after template selection",
+      "files": ["test-resumes/sample-zh.md"]
+    },
+    {
+      "id": 2,
+      "prompt": "I have a resume at test-resumes/sample-en.md, please generate a typst resume PDF and save to ~/Desktop/tpr-output",
+      "expected_output": "Successfully parses English resume, respects custom output directory ~/Desktop/tpr-output, generates previews and compiles PDF",
+      "files": ["test-resumes/sample-en.md"]
+    },
+    {
+      "id": 3,
+      "prompt": "我有一份 markdown 格式的简历 test-resumes/sample-zh.md，能帮我排版成好看的 PDF 吗？",
+      "expected_output": "Skill triggers even without explicit mention of typst/template, follows the same four-phase workflow",
+      "files": ["test-resumes/sample-zh.md"]
+    }
+  ]
+}
