@@ -1,0 +1,19 @@
+{
+  "name": "typst-resume-marketplace",
+  "metadata": {
+    "description": "Typst resume generation plugin — parse free-form Markdown, preview 5 templates in browser, compile to PDF.",
+    "version": "1.0.0"
+  },
+  "owner": {
+    "name": "Aryous"
+  },
+  "plugins": [
+    {
+      "name": "typst-resume",
+      "source": "./plugins/typst-resume",
+      "description": "Generate polished Typst PDF resumes from free-form Markdown. Browser-based template selector with real SVG previews, outputs PDF + Typst source + JSON.",
+      "keywords": ["resume", "typst", "pdf", "template", "cv", "简历"],
+      "category": "productivity"
+    }
+  ]
+}

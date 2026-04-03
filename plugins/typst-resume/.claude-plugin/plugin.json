@@ -1,0 +1,10 @@
+{
+  "name": "typst-resume",
+  "description": "Generate polished Typst PDF resumes from free-form Markdown with browser-based template selection.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Aryous"
+  },
+  "repository": "https://github.com/Aryous/typst-resume-marketplace",
+  "license": "MIT"
+}
